@@ -1,0 +1,22 @@
+.input {
+  margin-bottom: 10px;
+}
+.input input[type="text"],.input input[type="tel"],.input input[type="email"]{margin: 2px;}
+.errorMsg {
+  font-size: 13px;
+  margin-top: 10px;
+  color:#fff;
+}
+.error{
+  border:1px solid #d63838 !important;
+}
+.container {padding-top: 60px;}
+select {
+  border:none;
+  background: #fff;
+  border-radius: 5px;
+}
+tr:hover {
+  background: #eee;
+  cursor: pointer;
+}
