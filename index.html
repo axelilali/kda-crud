@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>CRUD APP</title>
+    <link rel="stylesheet" href="css/semantic.min.css">
+    <link rel="stylesheet" href="css/master.css">
+  </head>
+  <body>
+    <div class="ui container">
+      <div class="ui divided grid ">
+        <div class="four wide column">
+          <h3>Formulaire</h3>
+          <form class="" action="" method="">
+
+            <div class="ui fluid small input">
+              <input class="tovalidate" id="nom" type="text" placeholder="Nom" required>
+              <input class="tovalidate" id="prenom" type="text" placeholder="Prenom" required>
+            </div>
+
+            <div class="ui fluid small input">
+              <input class="tovalidate" id="email" type="email" placeholder="Email" value="" required>
+            </div>
+
+            <div class="ui fluid small input">
+              <input id="age" type="text" placeholder="Age">
+              <input class="tovalidate" id="poste" type="text" placeholder="Poste required">
+            </div>
+
+            <div class="ui fluid  small input">
+              <input class="tovalidate" id="tel" type="tel" placeholder="Tel"required>
+            </div>
+
+            <div class="ui fluid input">
+              <input class="tovalidate" id="pays" type="text" placeholder="Pays" required>
+
+              <div class="ui compact menu">
+                <!-- <div class="ui simple dropdown item">
+                  Status
+                  <i class="dropdown icon"></i>
+                  <div class="menu">
+                    <div class="item">Celibataire</div>
+                    <div class="item">Marié</div>
+                  </div>
+                </div> -->
+                <select class="tovalidate" id="status" class="" name="">
+                  <option value="">Status</option>
+                  <option value="celibataire">Celibataire</option>
+                  <option value="celibataire">Marié</option>
+                </select>
+              </div>
+            </div>
+            <p class="errorMsg">.</p>
+            <input class="ui button" type="submit" name="" value="Enregistrer">
+
+          </form>
+        </div>
+
+        <div class="twelve wide column">
+          <h3>Liste des employés</h3>
+          <table class="ui table">
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Poste</th>
+                <th>No. téléphone</th>
+                <th>Status Marital</th>
+                <th>Pays origine</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/users.js" charset="utf-8"></script>
+    <script src="js/master.js" charset="utf-8"></script>
+  </body>
+</html>
