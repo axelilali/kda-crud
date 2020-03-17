@@ -1,6 +1,7 @@
 .container {
   padding: 0 30px;
 }
+td, .ui .button {font-size: 12px;}
 .input {margin-bottom: 10px;}
 .input input[type="text"],.input input[type="tel"],.input input[type="email"]{margin: 2px;}
 .errorMsg {

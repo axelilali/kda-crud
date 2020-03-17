@@ -1,4 +1,4 @@
-$(function(){
+// $(function(){
 
 //Declaration des varialbles
 let table = document.querySelector('table')
@@ -19,10 +19,11 @@ for(i=0;i<user.length;i++){
 									<td>${user[i].email}</td>
 									<td>${user[i].age}</td>
 									<td>${user[i].poste}</td>
-									<td>${user[i].numeroTelephone}</td>
+									<td>${user[i].tel}</td>
                   <td>${user[i].status}</td>
   								<td>${user[i].pays}</td>
-                  <td><button id=${i} class="ui button">X</button></td></tr>`
+                    <td><button id=${i} class="ui button">edit</button></td>
+                  <td><button class="ui button">delete</button></td></tr>`
 }
 
 
@@ -102,13 +103,43 @@ submitbtn.addEventListener('click',(e)=>{
 //Suprimmer les Users
 table.addEventListener('click',(e)=>{
 
-  let element = e.target.localName
+  let element = e.target.innerText
 
-  if(element=='button'){
+  //delete
+  if(element=='delete'){
+    let prompt = confirm("Voulez vous supprimer ?")
     td = e.target.parentNode
     tr = td.parentNode
-    tr.style.display="none"
+    if(prompt){
+      tr.style.display="none"
+    }
+  }
+
+  //edit
+  if(element=='edit'){
+
+    //   if(element=='edit'){
+
+      let index = e.target.id
+    	console.log(user[index])
+
+  //   $name.value = user[index].nom
+      document.querySelector('#id').value = user[index].id
+      document.querySelector('#nom').value = user[index].nom
+      document.querySelector('#prenom').value = user[index].prenom
+      document.querySelector('#email').value = user[index].email
+      document.querySelector('#age').value = user[index].age
+      document.querySelector('#poste').value = user[index].poste
+      document.querySelector('#tel').value = user[index].tel
+      document.querySelector('#pays').value = user[index].pays
+      document.querySelector('#status').value = user[index].status
+
+     btn = document.querySelector('form input[type="submit"]')
+    btn.defaultValue = 'Mettre a jour'
+  //   console.log(btn)
+
+  //     }
   }
 })
 
-})
+// })
