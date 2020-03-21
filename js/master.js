@@ -1,145 +1,149 @@
-// $(function(){
+$(function(){
+  $('#update').hide()
 
-//Declaration des varialbles
-let table = document.querySelector('table')
-let tb = document.querySelector('tbody')
-let td = document.createElement('tr')
-let inputs = document.querySelectorAll('.tovalidate')
-let submitbtn = document.querySelector('form input[type="submit"]')
-let form = document.querySelector('form')
-let errorMsg = document.querySelector('.errorMsg')
+  $clearInputs = ()=>{
+    $('.tovalidate, form select, #age').each(function(){
+      $(this).val("")
+    })
+  }
 
+  $formValidation = ()=>{
+    $('.tovalidate').each(function(){
+      if($(this).val()==''){
+        $(this).addClass('error')
+        $('.errorMsg').text("*Veuillez remplir les champs obligatoires")
+        $('.errorMsg').css({color:'#d63838'})
+        $result = false
+      }else{
+        $(this).removeClass('error')
+        $('.errorMsg').text("")
+        $result = true
+      }
+    })
+    return $result
+  }
 
+  // Get All Users
+  $getAllUsers = ()=>{
+    $.each(users,(index,user)=>{
+    $userDetails ="<tr><input type='hidden' value='"+index+"'><td>"+user.id+"</td>"
+                  +"<td>"+user.nom+"</td>"
+                  +"<td>"+user.prenom+"</td>"
+                  +"<td>"+user.email+"</td>"
+                  +"<td>"+user.age+"</td>"
+                  +"<td>"+user.poste+"</td>"
+                  +"<td>"+user.tel+"</td>"
+                  +"<td>"+user.status+"</td>"
+                  +"<td>"+user.pays+"</td>"
+                  +"<td><button class='ui button'>edit</button></td>"
+                  +"<td><button class='ui button delete'>delete</button></td></tr>"
+      $('tbody').append($userDetails)
+    })
+  }
 
-// 1.Affichage des Users
-for(i=0;i<user.length;i++){
-  tb.innerHTML += `<tr id=${i}"><td>${user[i].id}</td>
-                  <td>${user[i].prenom}</td>
-									<td>${user[i].nom}</td>
-									<td>${user[i].email}</td>
-									<td>${user[i].age}</td>
-									<td>${user[i].poste}</td>
-									<td>${user[i].tel}</td>
-                  <td>${user[i].status}</td>
-  								<td>${user[i].pays}</td>
-                    <td><button id=${i} class="ui button">edit</button></td>
-                  <td><button class="ui button">delete</button></td></tr>`
-}
+  $getAllUsers()
 
+  // save new user
+  $('#save').click(function(e){
+    e.preventDefault()
+    $formValidation()
 
+    if($formValidation()){
+      $user ={
+        id:$('#id').val(),
+        nom:$('#nom').val(),
+        prenom:$('#prenom').val(),
+        email:$('#email').val(),
+        age:$('#age').val(),
+        poste:$('#poste').val(),
+        tel:$('#tel').val(),
+        status:$('#status').val(),
+        pays:$('#pays').val(),
+      }
 
-// 2. Ajout des Users
-submitbtn.addEventListener('click',(e)=>{
-  e.preventDefault();
+      users.push($user)
+      $newUser ="<tr><input type='hidden' value='"+((users.length)-1)+"'><td>"+$user.id+"</td>"
+                      +"<td>"+$user.nom+"</td>"
+                      +"<td>"+$user.prenom+"</td>"
+                      +"<td>"+$user.email+"</td>"
+                      +"<td>"+$user.age+"</td>"
+                      +"<td>"+$user.poste+"</td>"
+                      +"<td>"+$user.tel+"</td>"
+                      +"<td>"+$user.status+"</td>"
+                      +"<td>"+$user.pays+"</td>"
+                      +"<td><button class='ui button'>edit</button></td>"
+                      +"<td><button class='ui button delete'>delete</button></td></tr>"
 
-  do{
-    let check
+      $('tbody').append($newUser)
+      $('.errorMsg').text("*Enregistré !")
+      $('.errorMsg').css({color:'#38d68a'})
+      $clearInputs()
+    }
+  })
 
-    //recuperation valeurs inputs
-    let id = document.querySelector('#id').value
-    let nom = document.querySelector('#nom').value
-    let prenom = document.querySelector('#prenom').value
-    let email = document.querySelector('#email').value
-    let age = document.querySelector('#age').value
-    let poste = document.querySelector('#poste').value
-    let tel =document.querySelector('#tel').value
-    let status =document.querySelector('#status').value
-    let pays = document.querySelector('#pays').value
+  // Delete & Update
+  $('tbody').click(function(e){
+    $target = $(e.target)
 
-    // convesrion de la collection inputs en tableau
-    inputs = Array.from(inputs)
+    if($target[0].innerText=='edit'){
+      $('#save').hide()
+      $('#update').show()
+      $('.errorMsg').text("")
 
-    //assignation de la classe error si champ vide
-    for(i=0;i<inputs.length;i++){
-      if(inputs[i].value==''){
-        check = false
-        inputs[i].classList.add('error')
-        errorMsg.style.color = '#d63838'
-        errorMsg.innerText = '* Veuillez remplir les champs obligatoires'
-      }else if(!inputs[i].value=='') {
-        check = true
-        inputs[i].classList.remove('error')
+      //get the user index via its hidden field
+      $index = $target.parent().siblings('input').val()
+
+      //set input values
+      $('#id').val(users[$index].id)
+      $('#nom').val(users[$index].nom)
+      $('#prenom').val(users[$index].prenom)
+      $('#email').val(users[$index].email)
+      $('#age').val(users[$index].age)
+      $('#poste').val(users[$index].poste)
+      $('#tel').val(users[$index].tel)
+      $('#status').val(users[$index].status)
+      $('#pays').val(users[$index].pays)
+
+      // update users
+      $('#update').click(function(e){
+        e.preventDefault()
+        $formValidation()
+
+        // if($formValidation){
+        users[$index].id = $('#id').val()
+        users[$index].nom = $('#nom').val()
+        users[$index].prenom = $('#prenom').val()
+        users[$index].email = $('#email').val()
+        users[$index].age = $('#age').val()
+        users[$index].poste = $('#poste').val()
+        users[$index].tel = $('#tel').val()
+        users[$index].pays = $('#pays').val()
+        users[$index].status = $('#status').val()
+
+        $('tbody').html("")
+        $getAllUsers()
+      })
+    }else{
+      $('#save').show()
+      $('#update').hide()
+    }
+
+    //Delete user
+    if($target[0].innerText=='delete'){
+      $index = $target.parent().siblings('input').val()
+      $confirm =confirm("Voulez-vous supprimer cet entrée ?")
+
+      if($confirm){
+        $($target).parent().parent().fadeOut()
+
+        // CODE TO DELETE HERE
+
+        users.splice($index,1)
+        $('form input').removeClass('error')
+        $('tbody').html("")
+        $clearInputs()
+        $getAllUsers()
       }
     }
-
-    //Creation nouvel utilisateur si check est OK
-    if(check){
-          let newUser ={
-            id:id,
-            nom:nom,
-            prenom:prenom,
-            email:email,
-            age:age,
-            poste:poste,
-            tel:tel,
-            status:status,
-            pays:pays
-          }
-          user.push(newUser)
-
-          tb.innerHTML += `<tr id=""><td>${newUser.id}</td>
-                          <td>${newUser.nom}</td>
-                          <td>${newUser.prenom}</td>
-                          <td>${newUser.email}</td>
-                          <td>${newUser.age}</td>
-                          <td>${newUser.poste}</td>
-                          <td>${newUser.tel}</td>
-                          <td>${newUser.status}</td>
-                          <td>${newUser.pays}</td>
-                          <td><button class="ui button">X</button></td></tr>`
-
-        //Reinitialisation champ du formulaire
-        document.querySelector('#age').value = ''
-        for(i=0;i<inputs.length;i++){
-          inputs[i].value=''
-
-          errorMsg.style.color = '#38d672'
-          errorMsg.innerText = 'Enregistré avec succès !'
-        }
-    }
-  }while (check=false)
+  })
 })
-
-//Suprimmer les Users
-table.addEventListener('click',(e)=>{
-
-  let element = e.target.innerText
-
-  //delete
-  if(element=='delete'){
-    let prompt = confirm("Voulez vous supprimer ?")
-    td = e.target.parentNode
-    tr = td.parentNode
-    if(prompt){
-      tr.style.display="none"
-    }
-  }
-
-  //edit
-  if(element=='edit'){
-
-    //   if(element=='edit'){
-
-      let index = e.target.id
-    	console.log(user[index])
-
-  //   $name.value = user[index].nom
-      document.querySelector('#id').value = user[index].id
-      document.querySelector('#nom').value = user[index].nom
-      document.querySelector('#prenom').value = user[index].prenom
-      document.querySelector('#email').value = user[index].email
-      document.querySelector('#age').value = user[index].age
-      document.querySelector('#poste').value = user[index].poste
-      document.querySelector('#tel').value = user[index].tel
-      document.querySelector('#pays').value = user[index].pays
-      document.querySelector('#status').value = user[index].status
-
-     btn = document.querySelector('form input[type="submit"]')
-    btn.defaultValue = 'Mettre a jour'
-  //   console.log(btn)
-
-  //     }
-  }
-})
-
-// })
