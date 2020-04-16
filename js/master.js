@@ -6,6 +6,7 @@ $(function(){
                   '<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td></tr>'+
                   '<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td></tr>')
 
+
   $clearInputs = ()=>{
     $('.tovalidate, form select, #age').each(function(){
       $(this).val("")
@@ -35,7 +36,7 @@ $(function(){
                   +"<td>"+user.prenom+"</td>"
                   +"<td>"+user.email+"</td>"
                   +"<td>"+user.poste+"</td>"
-                  +"<td>"+user.numeroTelephone[0]+"</td>"
+                  // +"<td>"+user.numeroTelephone[0]+"</td>"
                   +"<td>"+user.estMarie+"</td>"
                   +"<td>"+user.pays+"</td>"
                   +"<td><button class='ui button'>edit</button></td>"
@@ -55,8 +56,7 @@ $(function(){
     $getAllUsers(data)
 
   }).fail((err)=>{
-
     $('tbody').html('<td style="text-align:center" colspan="8">'+err.status+' '+err.statusText+'<td>')
-    
   });
+
 })
