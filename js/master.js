@@ -1,5 +1,6 @@
 $(function(){
   $('#update').hide()
+  // $result = true
 
   //loader
     $('tbody').html('<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td></tr>'+
@@ -13,19 +14,24 @@ $(function(){
   }
 
   $formValidation = ()=>{
+    if($('form input').val()!=''){
+      $validation = true
+      $('.errorMsg').text("")
+  
+    }
     $('.tovalidate').each(function(){
       if($(this).val()==''){
         $(this).addClass('error')
         $('.errorMsg').text("*Veuillez remplir les champs obligatoires")
         $('.errorMsg').css({color:'#d63838'})
-        $result = false
+        $validation = false
       }else{
         $(this).removeClass('error')
-        $('.errorMsg').text("")
-        $result = true
+        // $('.errorMsg').text("")
+
       }
     })
-    return $result
+    return $validation
   }
 
   // Get All Users
