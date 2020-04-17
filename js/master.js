@@ -39,7 +39,7 @@ $(function(){
                   +"<td>"+user.estMarie+"</td>"
                   +"<td>"+user.pays+"</td>"
                   +"<td><button class='ui button'>edit</button></td>"
-                  +"<td><button class='ui button delete'>delete</button></td></tr>"
+                  +"<td><button id='delete' class='ui button delete'>delete</button></td></tr>"
       $('tbody').append($userDetails)
     })
   }
@@ -64,6 +64,9 @@ $(function(){
   // Delete & Update
   $('tbody').click(function(e){
     $target = $(e.target)
+    $('#save').show()
+    $('#update').hide()
+
 
     if($target[0].innerText=='edit'){
       $('#save').hide()
@@ -77,7 +80,8 @@ $(function(){
       $('#nom').val($data[$index].nom)
        $('#prenom').val($data[$index].prenom)
        $('#email').val($data[$index].email)
-       $('#status').val($data[$index].estMarie)
+       $('#status .placeholder').val($data[$index].estMarie)
+       $('#status .placeholder').text($data[$index].estMarie)
        $('#pays').val($data[$index].pays)
        $('#poste').val($data[$index].poste)
 
@@ -107,12 +111,8 @@ $(function(){
               poste: $('#poste').val()
             }
           }).done((res)=>{
-            // console.log(res);
-
             location.reload()
             $clearInputs()
-          }).fail((err)=>{
-            $('tbody').html('<td  style="text-align:center" colspan="8">'+err.status+' '+err.statusText+'<td>')
           })
         }else {
           e.preventDefault()
@@ -120,5 +120,29 @@ $(function(){
         }
       })
     }
+
+
+    // Delete users
+    if($target[0].innerText=='delete'){
+      // console.log('deleted')
+      $id = $target.parent().siblings('._id').val()
+      $confirm = confirm("Voulez-vous supprimer cette entrée ?")
+
+      if($confirm){
+        $('tbody').html('<td class="loader" style="text-align:center" colspan="7">Deleting ...<td>')
+        console.log($id);
+
+        $.ajax({
+          url: "http://167.71.45.243:4000/api/employes/"+$id+"?api_key=ssvfsex",
+          method: "DELETE",
+        }).done(()=>{
+          location.reload()
+        }).fail((err)=>{
+          $('tbody').html('<td  style="text-align:center" colspan="8">'+err.status+' '+err.statusText+'<td>')
+        })
+      }
+    }
   })
+
+
 })
