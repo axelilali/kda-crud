@@ -8,19 +8,24 @@ $(function(){
   }
 
   $formValidation = ()=>{
+    if($('form input').val()!=''){
+      $validation = true
+      $('.errorMsg').text("")
+
+    }
     $('.tovalidate').each(function(){
       if($(this).val()==''){
         $(this).addClass('error')
         $('.errorMsg').text("*Veuillez remplir les champs obligatoires")
         $('.errorMsg').css({color:'#d63838'})
-        $result = false
+        $validation = false
       }else{
         $(this).removeClass('error')
-        $('.errorMsg').text("")
-        $result = true
+        // $('.errorMsg').text("")
+
       }
     })
-    return $result
+    return $validation
   }
 
   // Get All Users
@@ -107,21 +112,23 @@ $(function(){
       // update users
       $('#update').click(function(e){
         e.preventDefault()
-        $formValidation()
 
-        // if($formValidation){
-        users[$index].id = $('#id').val()
-        users[$index].nom = $('#nom').val()
-        users[$index].prenom = $('#prenom').val()
-        users[$index].email = $('#email').val()
-        users[$index].age = $('#age').val()
-        users[$index].poste = $('#poste').val()
-        users[$index].tel = $('#tel').val()
-        users[$index].pays = $('#pays').val()
-        users[$index].status = $('#status').val()
+        if ($formValidation()) {
+          // if($formValidation){
+          users[$index].id = $('#id').val()
+          users[$index].nom = $('#nom').val()
+          users[$index].prenom = $('#prenom').val()
+          users[$index].email = $('#email').val()
+          users[$index].age = $('#age').val()
+          users[$index].poste = $('#poste').val()
+          users[$index].tel = $('#tel').val()
+          users[$index].pays = $('#pays').val()
+          users[$index].status = $('#status').val()
 
-        $('tbody').html("")
-        $getAllUsers()
+          $('tbody').html("")
+          $getAllUsers()
+        }
+
       })
     }else{
       $('#save').show()
