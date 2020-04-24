@@ -51,11 +51,6 @@ $(function(){
 
   $.ajax({
     url: "http://167.71.45.243:4000/api/employes?api_key=ssvfsex",
-<<<<<<< HEAD
-=======
-    // url: "http://ajax.ngrok.io/api/employes?api_key=mumfasq",
-    // url: "http://127.0.0.1:2504/api",
->>>>>>> 93ce7674aa8dd330f92d2fe1539adffc4250b0cc
     method: "GET",
     dataType:'json'
   }).done((data)=>{
