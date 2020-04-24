@@ -3,9 +3,9 @@ $(function(){
   // $result = true
 
   //loader
-    $('tbody').html('<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td></tr>'+
-                    '<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td></tr>'+
-                    '<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><</tr>')
+    $('tbody').html('<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td></tr>'+
+                    '<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td></tr>'+
+                    '<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td></tr>')
 
   $clearInputs = ()=>{
     $('.tovalidate, form select, #age').each(function(){
@@ -17,7 +17,7 @@ $(function(){
     if($('form input').val()!=''){
       $validation = true
       $('.errorMsg').text("")
-  
+
     }
     $('.tovalidate').each(function(){
       if($(this).val()==''){
@@ -41,7 +41,7 @@ $(function(){
                   +"<td>"+user.prenom+"</td>"
                   +"<td>"+user.email+"</td>"
                   +"<td>"+user.poste+"</td>"
-                  // +"<td>"+user.numeroTelephone[0]+"</td>"
+                  +"<td>"+user.numeroTelephone+"</td>"
                   +"<td>"+user.estMarie+"</td>"
                   +"<td>"+user.pays+"</td>"
                   +"<td><button class='ui button'>edit</button></td>"
@@ -53,6 +53,8 @@ $(function(){
 
   $.ajax({
     url: "http://167.71.45.243:4000/api/employes?api_key=ssvfsex",
+    // url: "http://ajax.ngrok.io/api/employes?api_key=mumfasq",
+    // url: "http://127.0.0.1:2504/api",
     method: "GET",
     dataType:'json'
   }).done((data)=>{
@@ -63,6 +65,43 @@ $(function(){
   }).fail((err)=>{
     $('tbody').html('<td style="text-align:center" colspan="8">'+err.status+' '+err.statusText+'<td>')
   });
+
+  // create users
+$('#save').click((e)=>{
+  e.preventDefault()
+
+
+
+  if ($formValidation()) {
+    if($('#status').val()=='true'){
+      $status = true
+    }else{$status=false}
+
+    $('tbody').html('<td class="loader" style="text-align:center" colspan="7">Saving ...<td>')
+
+    $.ajax({
+      url: "http://167.71.45.243:4000/api/employes?api_key=ssvfsex",
+      // url: "http://127.0.0.1:2504/api",
+      method:'POST',
+      dataType:'json',
+      data:{
+        nom: $('#nom').val(),
+        prenom: $('#prenom').val(),
+        email:$('#email').val(),
+        estMarie: $status,
+        pays: $('#pays').val(),
+        poste: $('#poste').val(),
+        numeroTelephone:$('#telephone').val()
+      }
+    }).done((res)=>{
+      location.reload()
+      $clearInputs()
+    })
+    .fail((err)=>{
+      console.log(err);
+    })
+  }
+})
 
 
 
@@ -88,6 +127,7 @@ $(function(){
        $('#email').val($data[$index].email)
        $('#status .placeholder').val($data[$index].estMarie)
        $('#status .placeholder').text($data[$index].estMarie)
+       $('#telephone').val($data[$index].numeroTelephone)
        $('#pays').val($data[$index].pays)
        $('#poste').val($data[$index].poste)
 
@@ -107,14 +147,17 @@ $(function(){
 
           $.ajax({
             url: "http://167.71.45.243:4000/api/employes/"+$id+"?api_key=ssvfsex",
+            // url: "http://127.0.0.1:2504/api/"+$id,
             method: "PUT",
+            dataType:'json',
             data:{
               nom: $('#nom').val(),
               prenom: $('#prenom').val(),
               email:$('#email').val(),
               estMarie: $status,
               pays: $('#pays').val(),
-              poste: $('#poste').val()
+              poste: $('#poste').val(),
+              numeroTelephone:$('#telephone').val(),
             }
           }).done((res)=>{
             location.reload()
@@ -140,6 +183,7 @@ $(function(){
 
         $.ajax({
           url: "http://167.71.45.243:4000/api/employes/"+$id+"?api_key=ssvfsex",
+          // url: "http://127.0.0.1:2504/api/"+$id,
           method: "DELETE",
         }).done(()=>{
           location.reload()
