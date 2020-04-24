@@ -1,6 +1,5 @@
 $(function(){
   $('#update').hide()
-  // $result = true
 
   //loader
     $('tbody').html('<tr class="loader"><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td><td><span></span> </td></tr>'+
@@ -27,7 +26,6 @@ $(function(){
         $validation = false
       }else{
         $(this).removeClass('error')
-        // $('.errorMsg').text("")
 
       }
     })
@@ -53,8 +51,11 @@ $(function(){
 
   $.ajax({
     url: "http://167.71.45.243:4000/api/employes?api_key=ssvfsex",
+<<<<<<< HEAD
+=======
     // url: "http://ajax.ngrok.io/api/employes?api_key=mumfasq",
     // url: "http://127.0.0.1:2504/api",
+>>>>>>> 93ce7674aa8dd330f92d2fe1539adffc4250b0cc
     method: "GET",
     dataType:'json'
   }).done((data)=>{
@@ -81,7 +82,6 @@ $('#save').click((e)=>{
 
     $.ajax({
       url: "http://167.71.45.243:4000/api/employes?api_key=ssvfsex",
-      // url: "http://127.0.0.1:2504/api",
       method:'POST',
       dataType:'json',
       data:{
@@ -147,7 +147,6 @@ $('#save').click((e)=>{
 
           $.ajax({
             url: "http://167.71.45.243:4000/api/employes/"+$id+"?api_key=ssvfsex",
-            // url: "http://127.0.0.1:2504/api/"+$id,
             method: "PUT",
             dataType:'json',
             data:{
@@ -173,7 +172,7 @@ $('#save').click((e)=>{
 
     // Delete users
     if($target[0].innerText=='delete'){
-      // console.log('deleted')
+
       $id = $target.parent().siblings('._id').val()
       $confirm = confirm("Voulez-vous supprimer cette entrée ?")
 
@@ -183,7 +182,6 @@ $('#save').click((e)=>{
 
         $.ajax({
           url: "http://167.71.45.243:4000/api/employes/"+$id+"?api_key=ssvfsex",
-          // url: "http://127.0.0.1:2504/api/"+$id,
           method: "DELETE",
         }).done(()=>{
           location.reload()
